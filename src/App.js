@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./App.css";
 import "./assets/style.css";
 import QuestionBox from "./components/QuestionBox";
+import Result from "./components/Result";
 import quizService from "./quizService";
 
 class App extends Component {
@@ -16,7 +17,10 @@ class App extends Component {
       this.setState({ questionBank: questions })
     );
   };
-
+  playAgain = () => {
+    this.getQuestions();
+    this.setState({ score: 0, responses: 0 });
+  };
   computeAnswer = (answer, correct) => {
     this.setState({ responses: this.state.responses + 1 });
 
@@ -30,11 +34,13 @@ class App extends Component {
   componentDidMount() {
     this.getQuestions();
   }
+
   render() {
     return (
       <div className="container">
         <div className="title"> Quiz Master</div>
         {this.state.questionBank.length > 0 &&
+          this.state.responses < 5 &&
           this.state.questionBank.map(
             ({ question, answers, correct, questionId }) => (
               <QuestionBox
@@ -46,6 +52,10 @@ class App extends Component {
               />
             )
           )}
+
+        {this.state.responses == 5 ? (
+          <Result score={this.state.score} playAgain={this.playAgain} />
+        ) : null}
       </div>
     );
   }
