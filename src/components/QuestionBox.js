@@ -30,13 +30,46 @@ const QuestionBox = ({ questions, options, selected, correct }) => {
           <span>
             {toggle ? (
               result ? (
-                <div>Correct Answer</div>
+                <div
+                  style={{
+                    backgroundColor: "green",
+                    color: "wheat",
+                    padding: "10px",
+                    borderRadius: "10px",
+                    width: "30%",
+                    textAlign: "center",
+                  }}
+                >
+                  Correct Answer
+                </div>
               ) : (
                 <div>
-                  Wrong Answer
+                  <div
+                    style={{
+                      backgroundColor: "red",
+                      color: "wheat",
+                      padding: "10px",
+                      borderRadius: "10px",
+                      width: "30%",
+                      textAlign: "center",
+                    }}
+                  >
+                    Wrong Answer
+                  </div>
+
                   <br />
-                  <br />
-                  <div>Correct Answer is {correct}</div>
+                  <div
+                    style={{
+                      backgroundColor: "cyan",
+                      color: "",
+                      padding: "10px",
+                      borderRadius: "10px",
+                      width: "30%",
+                      textAlign: "center",
+                    }}
+                  >
+                    Correct Answer is {correct}
+                  </div>
                 </div>
               )
             ) : (

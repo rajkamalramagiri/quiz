@@ -46,6 +46,16 @@ class App extends Component {
               />
             )
           )}
+        {this.state.responses == 5 ? (
+          <div
+            className="answerBtn"
+            style={{ position: "fixed", top: "20%", right: "50%" }}
+          >
+            Your Score is {this.state.score}
+          </div>
+        ) : (
+          ""
+        )}
       </div>
     );
   }
