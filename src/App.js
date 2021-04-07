@@ -3,18 +3,27 @@ import "./App.css";
 import "./assets/style.css";
 import QuestionBox from "./components/QuestionBox";
 import quizService from "./quizService";
+import Result from "./components/Result";
 
 class App extends Component {
   state = {
     questionBank: [],
     score: 0,
     responses: 0,
+    showResult: false,
   };
-
+  handleResult = () => {
+    this.setState({ responses: this.state.responses + 1 });
+  };
   getQuestions = () => {
     quizService().then((questions) =>
       this.setState({ questionBank: questions })
     );
+  };
+
+  playAgain = () => {
+    this.getQuestions();
+    this.setState({ score: 0, responses: 0 });
   };
 
   computeAnswer = (answer, correct) => {
@@ -35,6 +44,7 @@ class App extends Component {
       <div className="container">
         <div className="title"> Quiz Master</div>
         {this.state.questionBank.length > 0 &&
+          this.state.responses < 6 &&
           this.state.questionBank.map(
             ({ question, answers, correct, questionId }) => (
               <QuestionBox
@@ -46,15 +56,18 @@ class App extends Component {
               />
             )
           )}
-        {this.state.responses == 5 ? (
-          <div
+        {this.state.responses == 5 && (
+          <button
             className="answerBtn"
-            style={{ position: "fixed", top: "20%", right: "50%" }}
+            style={{ marginLeft: "50%" }}
+            onClick={this.handleResult}
           >
-            Your Score is {this.state.score}
-          </div>
-        ) : (
-          ""
+            show results
+          </button>
+        )}
+
+        {this.state.responses == 6 && (
+          <Result score={this.state.score} playAgain={this.playAgain} />
         )}
       </div>
     );
