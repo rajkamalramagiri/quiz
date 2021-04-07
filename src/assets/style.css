@@ -86,3 +86,13 @@
 .button {
   display: flex;
 }
+.quizData {
+  padding: 20px;
+  font-weight: bolder;
+  border: solid gray 1px;
+  width: 100%;
+}
+.quizDataCard {
+  display: flex;
+  justify-content: center;
+}

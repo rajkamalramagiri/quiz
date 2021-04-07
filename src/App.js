@@ -4,21 +4,29 @@ import "./assets/style.css";
 import QuestionBox from "./components/QuestionBox";
 import quizService from "./quizService";
 import Result from "./components/Result";
+import Description from "./components/Description";
 
 class App extends Component {
   state = {
     questionBank: [],
+    showQuestions: false,
+    showDescription: true,
     score: 0,
     responses: 0,
     showResult: false,
+    description: {},
   };
   handleResult = () => {
     this.setState({ responses: this.state.responses + 1 });
   };
   getQuestions = () => {
-    quizService().then((questions) =>
-      this.setState({ questionBank: questions })
-    );
+    quizService().then((questions) => {
+      console.log(questions);
+      this.setState({
+        questionBank: questions[0].questions,
+        description: questions[0].description,
+      });
+    });
   };
 
   playAgain = () => {
@@ -43,8 +51,13 @@ class App extends Component {
     return (
       <div className="container">
         <div className="title"> Quiz Master</div>
-        {this.state.questionBank.length > 0 &&
-          this.state.responses < 6 &&
+        {this.state.showDescription && (
+          <Description description={this.state.description} />
+        )}
+
+        {this.state.showQuestions &&
+          this.state.questionBank.length > 0 &&
+          this.state.responses < this.state.questionBank.length + 1 &&
           this.state.questionBank.map(
             ({ question, answers, correct, questionId }) => (
               <QuestionBox
@@ -56,7 +69,7 @@ class App extends Component {
               />
             )
           )}
-        {this.state.responses == 5 && (
+        {this.state.responses == this.state.questionBank.length && (
           <button
             className="answerBtn"
             style={{ marginLeft: "50%" }}
@@ -66,8 +79,12 @@ class App extends Component {
           </button>
         )}
 
-        {this.state.responses == 6 && (
-          <Result score={this.state.score} playAgain={this.playAgain} />
+        {this.state.responses == this.state.questionBank.length + 1 && (
+          <Result
+            score={this.state.score}
+            total={this.state.questionBank.length}
+            playAgain={this.playAgain}
+          />
         )}
       </div>
     );
