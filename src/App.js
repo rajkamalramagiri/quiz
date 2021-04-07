@@ -46,6 +46,9 @@ class App extends Component {
   };
   componentDidMount() {
     this.getQuestions();
+    setTimeout(() => {
+      this.setState({ showDescription: false, showQuestions: true });
+    }, 3000);
   }
   render() {
     return (
