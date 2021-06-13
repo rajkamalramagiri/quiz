@@ -1,10 +1,11 @@
+import kerala from "../assets/kerala.png";
+import ap from "../assets/ap.jpeg";
 const qBank = [
   {
     id: 1,
     description: {
-      state: "Tamil Nadu",
-      capital: "Chennai",
-      language: "Tamiz",
+      image:
+        "https://image.shutterstock.com/image-vector/tamil-nadu-districts-vector-map-260nw-1009413172.jpg",
     },
     questions: [
       {
@@ -24,9 +25,7 @@ const qBank = [
   {
     id: 2,
     description: {
-      state: "Telangana",
-      capital: "hyderabad",
-      language: "Telugu",
+      image: ap,
     },
     questions: [
       {
@@ -46,9 +45,7 @@ const qBank = [
   {
     id: 3,
     description: {
-      state: "Kerala",
-      capital: "Thiruvananthapuram",
-      language: "Malayalam",
+      image: kerala,
     },
     questions: [
       {

@@ -5,13 +5,15 @@ import QuestionBox from "./components/QuestionBox";
 import quizService from "./quizService";
 import Result from "./components/Result";
 import Description from "./components/Description";
+import StartPage from "./components/StartPage";
 
 class App extends Component {
   state = {
-    questionBank: [],
+    questionBank: ["a"],
     showQuestions: false,
-    showDescription: true,
+    showDescription: false,
     score: 0,
+    start: true,
     responses: 0,
     showResult: false,
     description: {},
@@ -21,7 +23,7 @@ class App extends Component {
   };
   getQuestions = () => {
     quizService().then((questions) => {
-      console.log(questions);
+      console.log("qns", questions);
       this.setState({
         questionBank: questions[0].questions,
         description: questions[0].description,
@@ -31,7 +33,20 @@ class App extends Component {
 
   playAgain = () => {
     this.getQuestions();
-    this.setState({ score: 0, responses: 0 });
+    this.setState({
+      score: 0,
+      responses: 0,
+      showDescription: true,
+      showQuestions: true,
+    });
+  };
+
+  start = () => {
+    this.getQuestions();
+    setTimeout(() => {
+      this.setState({ showDescription: false, showQuestions: true });
+    }, 3000);
+    this.setState({ start: false, showDescription: true });
   };
 
   computeAnswer = (answer, correct) => {
@@ -44,16 +59,13 @@ class App extends Component {
       return false;
     }
   };
-  componentDidMount() {
-    this.getQuestions();
-    setTimeout(() => {
-      this.setState({ showDescription: false, showQuestions: true });
-    }, 3000);
-  }
+
   render() {
     return (
       <div className="container">
         <div className="title"> Quiz Master</div>
+        {this.state.start && <StartPage start={this.start} />}
+
         {this.state.showDescription && (
           <Description description={this.state.description} />
         )}
